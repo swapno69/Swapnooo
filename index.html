@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile & Links</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #0a0510;
+            font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+            color: #ffffff;
+            padding: 40px 20px;
+        }
+
+        .profile-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            max-width: 450px; 
+            width: 100%;
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .profile-pic {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(157, 141, 187, 0.3);
+            box-shadow: 0 0 25px rgba(157, 141, 187, 0.15);
+            transition: transform 0.5s ease, border-color 0.5s ease;
+        }
+
+        .profile-container:hover .profile-pic {
+            transform: scale(1.05);
+            border-color: #9d8dbb;
+            box-shadow: 0 0 30px rgba(157, 141, 187, 0.4);
+        }
+
+        .profile-name {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            background: linear-gradient(45deg, #ffffff, #9d8dbb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .profile-bio {
+            font-size: 1rem;
+            color: #9d8dbb;
+            max-width: 380px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .info-card {
+            width: 100%;
+            max-width: 320px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 22px;
+            margin-bottom: 30px;
+            text-align: left;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #9d8dbb;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 4px;
+            opacity: 0.8;
+        }
+
+        .info-value {
+            font-size: 0.95rem;
+            color: #ffffff;
+            font-weight: 600;
+            word-break: break-word;
+        }
+
+        .social-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px; 
+            padding: 35px;
+            width: 100%;
+            max-width: 280px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .social-btn {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            height: 60px;
+            width: 60px;
+            padding: 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: #9d8dbb;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .social-btn i,
+        .social-btn .brand-logo-svg {
+            font-size: 22px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            fill: #9d8dbb; 
+            min-width: 24px; 
+            z-index: 2;
+            transition: color 0.3s ease, fill 0.3s ease, transform 0.5s ease;
+        }
+
+        .social-btn .btn-text {
+            font-size: 16px;
+            font-weight: 700;
+            white-space: nowrap;
+            margin-left: 15px;
+            opacity: 0;
+            z-index: 2;
+            transform: translateX(-15px);
+            transition: all 0.4s ease;
+        }
+
+        .social-btn:hover, .social-btn.active {
+            width: 220px;
+            color: #ffffff;
+            transform: translateY(-3px);
+        }
+
+        .social-btn:hover .btn-text, .social-btn.active .btn-text {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .social-btn:hover i, .social-btn.active i,
+        .social-btn:hover .brand-logo-svg, .social-btn.active .brand-logo-svg {
+            transform: rotate(360deg);
+            color: #ffffff; 
+            fill: #ffffff; 
+        }
+
+        .freefire:hover, .freefire.active {
+            background: linear-gradient(135deg, #ff4500, #ff8c00);
+            border-color: #ffaa00;
+            box-shadow: 0 10px 20px rgba(255, 69, 0, 0.4), 0 0 15px rgba(255, 140, 0, 0.3);
+        }
+
+        .mlbb:hover, .mlbb.active {
+            background: linear-gradient(135deg, #111827, #1e3a8a);
+            border-color: #f59e0b;
+            box-shadow: 0 10px 20px rgba(30, 58, 138, 0.6), 0 0 15px rgba(245, 158, 11, 0.4);
+        }
+        .mlbb:hover .brand-logo-svg, .mlbb.active .brand-logo-svg {
+            fill: #fbbf24;
+        }
+
+        .phone:hover, .phone.active {
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-color: #34d399;
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.4), 0 0 15px rgba(5, 150, 105, 0.3);
+        }
+
+        .github:hover, .github.active { background: #333; border-color: #444; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 255, 255, 0.1); }
+        .instagram:hover, .instagram.active { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); border-color: #bc1888; box-shadow: 0 10px 20px rgba(188, 24, 136, 0.3); }
+        .tiktok:hover, .tiktok.active { background: #010101; border-color: #fe2c55; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), -3px 0 10px rgba(37, 244, 238, 0.4), 3px 0 10px rgba(254, 44, 85, 0.4); }
+        .tiktok:hover i, .tiktok.active i { color: #ffffff; text-shadow: -2px 0 #25f4ee, 2px 0 #fe2c55; }
+        .facebook:hover, .facebook.active { background: #1877f2; border-color: #1877f2; box-shadow: 0 10px 20px rgba(24, 119, 242, 0.4); }
+
+        @media (max-width: 480px) {
+            .social-wrapper {
+                padding: 25px 15px;
+                gap: 15px;
+            }
+            .social-btn {
+                height: 55px;
+                width: 55px;
+                padding: 15px;
+            }
+            .social-btn:hover, .social-btn.active {
+                width: 195px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="profile-container">
+    
+    <div class="avatar-wrapper">
+        <img src="swapno1.png" alt="Profile Picture" class="profile-pic">
+    </div>
+
+    <h1 class="profile-name">SWAPNO</h1>
+    <p class="profile-bio">YOOOOOO !!!</p>
+
+    <div class="info-card">
+        <div class="info-grid">
+            <div class="info-item">
+                <span class="info-label">Age</span>
+                <span class="info-value">17</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Blood Group</span>
+                <span class="info-value">B+</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Birthday</span>
+                <span class="info-value">May 22, 2009</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Class</span>
+                <span class="info-value">Inter 2nd Year</span>
+            </div>
+            <div class="info-item full-width">
+                <span class="info-label">Institution</span>
+                <span class="info-value">GOPALGANJ GOVT. COLLEGE</span>
+            </div>
+            <div class="info-item full-width">
+                <span class="info-label">Address</span>
+                <span class="info-value">GOPALGANG SADAR,GOPALGANJ </span>
+            </div>
+            <div class="info-item full-width">
+                <span class="info-label">Hobbies</span>
+                <span class="info-value">Gaming, Coding, Music, Travelling</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="social-wrapper">
+        
+        <a href="#" class="social-btn freefire" data-id="1825915354">
+            <svg class="brand-logo-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="20" font-weight="900" font-family="'Impact', 'Arial Black', sans-serif">F</text>
+            </svg>
+            <span class="btn-text">Free Fire</span>
+        </a>
+
+        <a href="#" class="social-btn mlbb" data-id="1922216631 (19111)">
+            <svg class="brand-logo-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="18" font-weight="900" font-family="'Impact', 'Arial Black', sans-serif">M</text>
+            </svg>
+            <span class="btn-text">MLBB</span>
+        </a>
+
+        <a href="#" class="social-btn phone" data-id="+8801794695828">
+            <i class="fas fa-phone"></i>
+            <span class="btn-text">Phone</span>
+        </a>
+
+        <a href="https://www.instagram.com/swapno_ghumacche?igsh=MWh4cHN2Z3BhbGIxZQ%3D%3D&utm_source=qr" class="social-btn instagram"><i class="fab fa-instagram"></i><span class="btn-text">Instagram</span></a>
+        <a href="https://www.tiktok.com/@swapno_ghumacche?_r=1&_t=ZS-97Kq9U58v6g" class="social-btn tiktok"><i class="fab fa-tiktok"></i><span class="btn-text">TikTok</span></a>
+        <a href="https://github.com/swapno69" class="social-btn github"><i class="fab fa-github"></i><span class="btn-text">GitHub</span></a>
+        <a href="https://www.facebook.com/share/1E8SNvguYp/?mibextid=wwXIfr" class="social-btn facebook"><i class="fab fa-facebook-f"></i><span class="btn-text">Facebook</span></a>
+        
+    </div>
+</div>
+
+<script>
+    const buttons = document.querySelectorAll('.social-btn');
+
+    function secureCopyText(textToCopy, buttonElement) {
+        const temporaryTextArea = document.createElement("textarea");
+        temporaryTextArea.value = textToCopy;
+        temporaryTextArea.style.position = "fixed";
+        temporaryTextArea.style.left = "-9999px";
+        document.body.appendChild(temporaryTextArea);
+        
+        temporaryTextArea.select();
+        temporaryTextArea.setSelectionRange(0, 99999); 
+        
+        try {
+            document.execCommand("copy");
+            
+            const textSpan = buttonElement.querySelector('.btn-text');
+            const originalText = textSpan.textContent;
+            
+            textSpan.textContent = originalText + " Copied!";
+            
+            setTimeout(() => {
+                textSpan.textContent = originalText;
+            }, 1200);
+        } catch (err) {
+            console.error("Fallback copy failed: ", err);
+        }
+        
+        document.body.removeChild(temporaryTextArea);
+    }
+
+    buttons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            const idToCopy = this.getAttribute('data-id');
+            
+            if (idToCopy) {
+                e.preventDefault();
+                secureCopyText(idToCopy, this);
+
+                if (!this.classList.contains('active')) {
+                    buttons.forEach(otherBtn => otherBtn.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            } else {
+                if (!this.classList.contains('active')) {
+                    e.preventDefault();
+                    buttons.forEach(otherBtn => otherBtn.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            }
+        });
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.social-wrapper')) {
+            buttons.forEach(btn => btn.classList.remove('active'));
+        }
+    });
+</script>
+
+</body>
+</html>
